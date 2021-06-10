@@ -60,13 +60,13 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.initAccordion();
 
-      console.log('newProduct:', thisProduct);
+      // console.log('newProduct:', thisProduct);
     }
 
     renderInMenu(){
       const thisProduct = this;
-
       /* generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
       /* create element using utils.createElementFromHTML */
@@ -75,6 +75,31 @@
       const menuContanier = document.querySelector(select.containerOf.menu);
       /* add element to menu */
       menuContanier.appendChild(thisProduct.element);
+    }
+
+    initAccordion(){
+      const thisProduct = this;
+
+      console.log(thisProduct.element);
+      console.log(thisProduct);
+      /* find the clickable trigger (the element that should react to clicking) */
+      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      /* START: add event listener to clickable trigger on event click */
+      clickableTrigger.addEventListener('click', function(event){
+        /* prevent default action for event */
+        event.preventDefault();
+        /* find active product (product that has active class) */
+        const activeProduct = document.querySelector('article.active');
+
+        /* if there is active product and it's not thisProduct.element, remove class active from it */
+        if(activeProduct && activeProduct != thisProduct.element){
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+        }
+
+        /* toggle active class on thisProduct.element */
+        const status = thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+        console.log(status);
+      });
     }
   }
   const app = {
