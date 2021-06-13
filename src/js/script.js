@@ -60,7 +60,10 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.getElements();
       thisProduct.initAccordion();
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
 
       // console.log('newProduct:', thisProduct);
     }
@@ -77,11 +80,19 @@
       menuContanier.appendChild(thisProduct.element);
     }
 
+    getElements(){
+      const thisProduct = this;
+
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
+
     initAccordion(){
       const thisProduct = this;
 
-      console.log(thisProduct.element);
-      console.log(thisProduct);
       /* find the clickable trigger (the element that should react to clicking) */
       const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       /* START: add event listener to clickable trigger on event click */
@@ -100,6 +111,65 @@
         const status = thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
         console.log(status);
       });
+    }
+
+    initOrderForm(){
+      const thisProduct = this;
+
+      console.log('initOrderForm');
+      thisProduct.form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function() {
+          thisProduct.processOrder();
+        });
+      }
+
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+    }
+
+    processOrder(){
+      const thisProduct = this;
+      console.log('processOrder');
+
+      //cover form to opbject structure { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+
+      //set price to default price
+      let price = thisProduct.data.price;
+
+      //for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        //determinate param vaule, paramId = 'toppings', param = {label: 'Toppings', type: 'checkboxes'...}
+        const param = thisProduct.data.params[paramId];
+        console.log(paramId, param);
+
+        //for every option in this category
+        for(let optionId in param.options) {
+          //determinate option value, optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+          const option = param.options[optionId];
+          console.log(optionId, option);
+
+          //checking if option is checked, and if it's not default calculate total price (total + option price)
+          if(formData.hasOwnProperty(paramId) && formData[paramId].includes(optionId) && option.default != true){
+            price += option.price;
+
+            //checking if option is unchecked, and if it's default calculate total price (total - option price)
+          } else if(formData.hasOwnProperty(paramId) && formData[paramId].includes(optionId) == false && option.default == true){
+            price -= option.price;
+          }
+        }
+      }
+
+      //udate calculated price in HTML
+      thisProduct.priceElem.innerHTML = price;
     }
   }
   const app = {
