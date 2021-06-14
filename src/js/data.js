@@ -38,8 +38,8 @@ dataSource.products = {
     images: [
       '<img class="active" src="images/pizza/crust.svg">',
       '<img class="active sauce-tomato" src="images/pizza/tomato-sauce.svg">',
-      '<img class="active sauce-cream" src="images/pizza/sour-cream.svg">',
-      '<img class="active toppings-salami" src="images/pizza/salami.svg">',
+      '<img class="sauce-cream" src="images/pizza/sour-cream.svg">',
+      '<img class="toppings-salami" src="images/pizza/salami.svg">',
       '<img class="active toppings-olives" src="images/pizza/olives.svg">',
       '<img class="active toppings-redPeppers" src="images/pizza/red-peppers.svg">',
       '<img class="active toppings-greenPeppers" src="images/pizza/green-peppers.svg">',

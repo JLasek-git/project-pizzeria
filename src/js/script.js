@@ -88,6 +88,8 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      console.log(thisProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -109,7 +111,7 @@
 
         /* toggle active class on thisProduct.element */
         const status = thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-        console.log(status);
+        // console.log(status);
       });
     }
 
@@ -140,7 +142,7 @@
 
       //cover form to opbject structure { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      // console.log('formData', formData);
 
       //set price to default price
       let price = thisProduct.data.price;
@@ -149,21 +151,33 @@
       for(let paramId in thisProduct.data.params) {
         //determinate param vaule, paramId = 'toppings', param = {label: 'Toppings', type: 'checkboxes'...}
         const param = thisProduct.data.params[paramId];
-        console.log(paramId, param);
+        // console.log(paramId, param);
 
         //for every option in this category
         for(let optionId in param.options) {
           //determinate option value, optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log(optionId, option);
+          // console.log(optionId, option);
 
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          const optionNotSelected = formData.hasOwnProperty(paramId) && formData[paramId].includes(optionId) == false;
           //checking if option is checked, and if it's not default calculate total price (total + option price)
-          if(formData.hasOwnProperty(paramId) && formData[paramId].includes(optionId) && option.default != true){
+          if(optionSelected && option.default != true){
             price += option.price;
-
             //checking if option is unchecked, and if it's default calculate total price (total - option price)
-          } else if(formData.hasOwnProperty(paramId) && formData[paramId].includes(optionId) == false && option.default == true){
+          } else if(optionNotSelected && option.default == true){
             price -= option.price;
+          }
+
+          const productId = '.' + paramId + '-' + optionId;
+          const optionImage = thisProduct.imageWrapper.querySelector(productId);
+
+          if(optionImage) {
+            if(optionSelected) {
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
+            } else {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
           }
         }
       }
