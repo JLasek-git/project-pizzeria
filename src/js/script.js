@@ -355,6 +355,10 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+      thisCart.dom.subTotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
+      thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
     }
 
     initActions(){
@@ -376,22 +380,29 @@
       thisCart.dom.productList.appendChild(generatedDOM);
 
       thisCart.products.push(new CartProduct(generatedDOM, menuProduct));
-
-      // thisCart.update();
+      console.log(thisCart.products);
+      thisCart.update();
     }
 
-    // update(){
-    //   const thisCart = this;
+    update(){
+      const thisCart = this;
 
-    //   const deliveryFee = settings.cart.defaultDeliveryFee;
-    //   let totalNumber = 0;
-    //   const subTotalPrice = 0;
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+      let totalNumber = 0;
+      let subTotalPrice = 0;
 
-    //   for (let product of thisCart.products) {
-    //     totalNumber = product.amount.value;
-    //     console.log(totalNumber);
-    //   }
-    // }
+      for (let product of thisCart.products) {
+        totalNumber += product.amount;
+        subTotalPrice += product.price;
+      }
+
+      if(subTotalPrice > 0) {
+        thisCart.totalPrice = subTotalPrice + deliveryFee;
+      }
+
+      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+
+    }
   }
 
   class CartProduct {
@@ -425,7 +436,7 @@
       const thisCartProduct = this;
 
       thisCartProduct.amountNumber = new AmountWidget(thisCartProduct.dom.amountWidget);
-      thisCartProduct.amountNumber.value = thisCartProduct.amount;
+      thisCartProduct.dom.amountWidget.querySelector('.amount').value = thisCartProduct.amount;
       thisCartProduct.dom.amountWidget.addEventListener('updated', function() {
         thisCartProduct.processOrder();
       });
@@ -438,6 +449,7 @@
       let price = thisCartProduct.dom.price;
 
       price.innerHTML = thisCartProduct.priceSingle * thisCartProduct.amountNumber.value;
+
     }
   }
 
