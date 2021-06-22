@@ -366,6 +366,8 @@
       thisCart.dom.subTotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
+
+
     }
 
     initActions(){
@@ -379,6 +381,10 @@
 
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+
+      thisCart.dom.productList.addEventListener('remove', function(){
+        thisCart.remove(event.detail.cartProduct);
       });
 
     }
@@ -395,12 +401,13 @@
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
 
       thisCart.update();
+      // console.log(thisCart.dom.productList);
     }
 
     update(){
       const thisCart = this;
 
-      const deliveryFee = settings.cart.defaultDeliveryFee;
+      let deliveryFee = settings.cart.defaultDeliveryFee;
       let totalNumber = 0;
       let subTotalPrice = 0;
 
@@ -411,15 +418,35 @@
 
       if(subTotalPrice > 0) {
         thisCart.totalPrice = subTotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      } else {
+        thisCart.totalPrice = 0;
+        thisCart.dom.deliveryFee.innerHTML = 0;
       }
 
-      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
       thisCart.dom.subTotalPrice.innerHTML = subTotalPrice;
       thisCart.dom.totalNumber.innerHTML = totalNumber;
 
       for(const price of thisCart.dom.totalPrice) {
         price.innerHTML = thisCart.totalPrice;
       }
+    }
+
+    remove(cartProduct){
+      const thisCart = this;
+
+      thisCart.productHtmlArray = thisCart.dom.productList.querySelectorAll('ul.cart__order-summary > li');
+      const indexOfProduct = thisCart.products.indexOf(cartProduct);
+
+      thisCart.productHtmlArray[indexOfProduct].remove();
+
+      // console.log(thisCart.products);
+      thisCart.products.splice(indexOfProduct, 1);
+
+      // console.log(thisCart.dom.productList);
+
+      thisCart.update();
+
     }
   }
 
@@ -439,6 +466,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
     }
 
     getElements(element) {
@@ -479,6 +507,31 @@
       // console.log('thisCartProduct.amountNumber: ', thisCartProduct.amountNumber);
       price.innerHTML = thisCartProduct.priceSingle * thisCartProduct.amount;
 
+    }
+
+    remove(){
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.wrapper.dispatchEvent(event);
+    }
+
+    initActions(){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
+        event.preventDefault();
+
+        thisCartProduct.remove();
+      });
     }
   }
 
