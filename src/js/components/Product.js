@@ -17,7 +17,7 @@ class Product {
     thisProduct.processOrder();
     thisProduct.prepareCartProductParams();
 
-    console.log('newProduct:', thisProduct);
+    // console.log('newProduct:', thisProduct);
   }
 
   renderInMenu(){
