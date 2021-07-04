@@ -17,6 +17,8 @@ class Booking {
   getData(){
     const thisBooking = this;
 
+    thisBooking.tableId = null;
+
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
     const params = {
@@ -118,6 +120,13 @@ class Booking {
   updateDOM(){
     const thisBooking = this;
 
+    const pickedTable = thisBooking.dom.floorPlan.querySelector('.' + classNames.booking.tablePicked);
+
+    if(pickedTable){
+      pickedTable.classList.remove(classNames.booking.tablePicked);
+      thisBooking.tableId = null;
+    }
+
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
@@ -166,6 +175,15 @@ class Booking {
     thisBooking.dom.dateWidget = document.querySelector(select.widgets.datePicker.wrapper);
 
     thisBooking.dom.tables =  document.querySelectorAll(select.booking.tables);
+    thisBooking.dom.button = document.querySelector(select.booking.btnBooking);
+    thisBooking.dom.floorPlan = document.querySelector(select.booking.floorPlan);
+
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll('[name=starter]');
+    thisBooking.starters = [];
+
     // console.log(thisBooking.dom.hourWidget);
 
   }
@@ -182,6 +200,102 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+
+    thisBooking.dom.floorPlan.addEventListener('click', function(event){
+      event.preventDefault();
+
+      thisBooking.initTables(event);
+    });
+
+    thisBooking.dom.button.addEventListener('click', function(event){
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+
+    /* Starters adding */
+    for(const starter of thisBooking.dom.starters){
+      starter.addEventListener('click', function(event){
+        if(!thisBooking.starters.includes(event.target.value)){
+          thisBooking.starters.push(event.target.value);
+        } else {
+          const indexOfStarter = thisBooking.starters.indexOf(event.target.value);
+          thisBooking.starters.splice(indexOfStarter, 1);
+        }
+      });
+    }
+
+
+  }
+
+  initTables(event){
+    const thisBooking = this;
+    const selectedTable = event.target;
+
+    const alreadySelected = thisBooking.dom.floorPlan.querySelector('.' + classNames.booking.tablePicked);
+    if(alreadySelected) {
+      alreadySelected.classList.remove(classNames.booking.tablePicked);
+    }
+
+    thisBooking.tableId = parseInt(selectedTable.getAttribute('data-table'));
+    // console.log(thisBooking.tableId);
+    //This condition determinates if table is table, if it's not booked and if it's not already picked
+    const mainCondition = selectedTable.classList.contains('table') && !selectedTable.classList.contains(classNames.booking.tableBooked);
+
+    // console.log(thisBooking.selectedTable);
+    if(mainCondition){
+      selectedTable.classList.add(classNames.booking.tablePicked);
+    }
+  }
+
+  sendBooking(){
+    const thisBooking = this;
+
+    //URL generation
+    const url = settings.db.url + '/' + settings.db.booking;
+
+    //Payload configuration
+    const payload = {};
+
+    payload.date = thisBooking.datePicker.correctValue;
+    payload.hour = thisBooking.hourPicker.correctValue;
+    payload.table = thisBooking.tableId;
+    payload.duration = thisBooking.hoursAmount.value;
+    payload.ppl = thisBooking.peopleAmount.value;
+    payload.starters = thisBooking.starters;
+    payload.phone = thisBooking.dom.phone.value;
+    payload.adress = thisBooking.dom.address.value;
+
+    //Convert hour from 12:30 format to 12.5
+    const hour = utils.hourToNumber(payload.hour);
+
+    // console.log(payload);
+
+    // Check if table is selected
+    if(payload.table == null){
+      alert('First select table.');
+    }
+    // If it's selected, check if it's not booked
+    else if(thisBooking.booked[payload.date][hour].includes(payload.table)) {
+      alert('Unfortunately, that table is already occupied.');
+    }
+    // If table is selected, and it's not booked add reservation
+    else {
+
+      //Booking to server options
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function(){
+          thisBooking.booked[payload.date][hour].push(payload.table);
+        });
+    }
+
   }
 }
 
