@@ -51,6 +51,7 @@ export const select = {
   },
   nav: {
     links: '.main-nav a',
+    allNavLinks: '.nav a'
   },
   // CODE ADDED START
   cart: {
@@ -72,6 +73,7 @@ export const select = {
     remove: '[href="#remove"]',
   },
   // CODE ADDED END
+
 };
 
 export const classNames = {

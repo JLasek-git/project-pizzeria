@@ -8,7 +8,7 @@ const app = {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
-    thisApp.navLinks = document.querySelectorAll(select.nav.links);
+    thisApp.navLinks = document.querySelectorAll(select.nav.allNavLinks);
 
     const idFromHash = window.location.hash.replace('#/', '');
     // console.log('idFromHash', idFromHash);
