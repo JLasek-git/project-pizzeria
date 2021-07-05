@@ -9,6 +9,7 @@
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="./vendor/range-slider.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -63,8 +64,116 @@
   </header>
 
   <div id="pages">
-    <section id="booking">
-      <div class="home-wrapper container"></div>
+    <section id="home">
+      <div class="home-wrapper container">
+        <div class=page-header>
+          <div class="pages-links">
+            <div class="order">
+                <img src="images/assets/pizza-1.jpg">
+              <div class="element-body">
+                <a href="#order">
+                  <h1>order online</h1>
+                  <span class="element-description">Delicious food delivered to your door</span>
+                </a>
+              </div>
+            </div>
+            <div class="booking">
+                <img src="images/assets/pizza-2.jpg">
+               <div class="element-body">
+                <a href="#booking">
+                  <h1>book a table</h1>
+                  <span class="element-description">Book table remotely</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="opening-hours">
+            <div class="content">
+              <h1 class="hours-header">opening hours</h1>
+              <span class="opened-at">tue-sun, 12pm-12am</span>
+            </div>
+          </div>
+        </div>
+        <div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true, "autoPlay": true, "prevNextButtons": false}'>
+          <div class="carousel-cell">
+            <div class="carousel-element">
+              <img src="images/assets/pizza-3.jpg">
+              <div class="opinion">
+                <h3>amazing service!</h3>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales</span>
+                <p><span class="author">- Margaret Osborne</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-cell">
+            <div class="carousel-element">
+              <img src="images/assets/pizza-4.jpg">
+              <div class="opinion">
+                <h3>amazing service!</h3>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales</span>
+                <p><span class="author">- Margaret Osborne</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-cell">
+            <div class="carousel-element">
+              <img src="images/assets/pizza-5.jpg">
+              <div class="opinion">
+                <h3>amazing service!</h3>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam egestas viverra tortor, eu ullamcorper dui imperdiet nec. Nunc sed dolor at elit lobortis sodales</span>
+                <p><span class="author">- Margaret Osborne</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery">
+          <ul class="gallery-list">
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-4.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-5.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-6.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-7.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-8.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+            <li class="gallery-element">
+              <div class="photo"><img src="images/assets/pizza-9.jpg"></div>
+              <div class="icons">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-share-alt"></i>
+              </div>
+            </li>
+          </ul>
+          <a href="#">View more on Instagram</a>
+        </div>
+      </div>
     </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
@@ -247,6 +356,9 @@
     </div>
   </script>
 
+
+  <script src="https://kit.fontawesome.com/6fc1926c78.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="vendor/range-slider.min.js"></script>
