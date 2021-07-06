@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import BaseWidget from '../Components/BaseWidget.js';
+import BaseWidget from '../components/BaseWidget.js';
 import {select, settings} from '../settings.js';
 import utils from '../utils.js';
 
