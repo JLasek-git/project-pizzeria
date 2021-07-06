@@ -31,7 +31,6 @@ class Product {
     /* add element to menu */
     menuContanier.appendChild(thisProduct.element);
 
-    console.log('jest');
   }
 
   getElements(){

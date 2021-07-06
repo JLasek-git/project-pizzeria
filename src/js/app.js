@@ -22,7 +22,6 @@ const app = {
       }
     }
 
-    console.log('jest');
 
 
     thisApp.activatePage(pageMatchingHash);

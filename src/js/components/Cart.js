@@ -50,7 +50,6 @@ class Cart {
       event.preventDefault();
       thisCart.sendOrder();
     });
-    console.log('jest');
   }
 
   add(menuProduct){

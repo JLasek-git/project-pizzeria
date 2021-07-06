@@ -33,7 +33,6 @@ class DatePicker extends BaseWidget{
       },
     });
 
-    console.log('jest');
   }
   parseValue(value){
     return value;

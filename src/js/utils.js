@@ -79,5 +79,4 @@ Handlebars.registerHelper('joinValues', function(input, options) {
   return Object.values(input).join(options.fn(this));
 });
 
-console.log('jest');
 export default utils;

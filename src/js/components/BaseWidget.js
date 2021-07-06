@@ -8,7 +8,7 @@ class BaseWidget{
 
     thisWidget.correctValue = initialValue;
 
-    console.log('jest');
+
   }
 
   get value(){
