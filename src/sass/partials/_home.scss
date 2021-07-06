@@ -164,13 +164,13 @@
 
     .gallery-element{
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: $gallery-element-size;
+      height: $gallery-element-size;
 
       .photo {
         position: relative;
-        width: 200px;
-        height: 200px;
+        width: $gallery-element-size;
+        height: $gallery-element-size;
         padding: 5px;
 
       }
