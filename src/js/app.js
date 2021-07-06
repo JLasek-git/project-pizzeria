@@ -22,6 +22,8 @@ const app = {
       }
     }
 
+    console.log('jest');
+
 
     thisApp.activatePage(pageMatchingHash);
 
@@ -42,6 +44,7 @@ const app = {
     }
 
   },
+
 
   activatePage: function(pageId){
     const thisApp = this;

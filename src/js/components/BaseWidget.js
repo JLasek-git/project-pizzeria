@@ -1,3 +1,4 @@
+
 class BaseWidget{
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
@@ -6,6 +7,8 @@ class BaseWidget{
     thisWidget.dom.wrapper = wrapperElement;
 
     thisWidget.correctValue = initialValue;
+
+    console.log('jest');
   }
 
   get value(){

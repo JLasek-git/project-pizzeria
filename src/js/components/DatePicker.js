@@ -32,6 +32,8 @@ class DatePicker extends BaseWidget{
         thisWidget.value = dateStr;
       },
     });
+
+    console.log('jest');
   }
   parseValue(value){
     return value;

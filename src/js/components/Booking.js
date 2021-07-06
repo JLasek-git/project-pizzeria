@@ -37,6 +37,8 @@ class Booking {
       ],
     };
 
+    console.log('jest');
+
     // console.log('getData params', params.booking);
 
     const urls = {
