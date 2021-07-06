@@ -30,6 +30,8 @@ class Product {
     const menuContanier = document.querySelector(select.containerOf.menu);
     /* add element to menu */
     menuContanier.appendChild(thisProduct.element);
+
+    // console.log(thisProduct.element);
   }
 
   getElements(){
