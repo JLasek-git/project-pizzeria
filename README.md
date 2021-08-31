@@ -19,3 +19,9 @@ If there's any problem with "npm install" just delete package-lock.json before n
         Exclusion of picked tables
         Sending Booked tables and Orders to API
         
+### QUICK LOOK ###
+![Pizzeria1](https://user-images.githubusercontent.com/84036777/131424126-171ab916-b52e-416c-9942-ac97f26b232d.PNG)
+![Pizzeria2](https://user-images.githubusercontent.com/84036777/131424128-88a29a0c-d619-4472-9c0d-edd8dff26b29.PNG)
+![Pizzeria3](https://user-images.githubusercontent.com/84036777/131424125-9e319941-f3a9-4de9-a868-f4197aa3df57.PNG)
+
+        
