@@ -1,4 +1,4 @@
-You can check this project on heroku: https://gentle-basin-69137.herokuapp.
+You can check this project on heroku: https://gentle-basin-69137.herokuapp.com/
 
     To start this locally
           git clone https://github.com/JLasek-git/project-pizzeria.git
